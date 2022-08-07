@@ -1,4 +1,3 @@
-import { Auth } from 'aws-amplify';
 import { useState } from "react";
 import { getUserToken } from "../Auth";
 
