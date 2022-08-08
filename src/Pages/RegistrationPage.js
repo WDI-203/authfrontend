@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerUser, loginUser } from "../Auth";
+import { useAuth } from "../Hooks/Auth";
 
 const RegistrationPage = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const Navigate = useNavigate()
+  const { login, register } = useAuth();
   return (
     <div>
       <h1>Registration Page</h1>
@@ -25,14 +24,10 @@ const RegistrationPage = (props) => {
       />
       <button
         onClick={async () => {
-          props.setIsAuthLoading(true);
-          const registerResult = await registerUser(username, password);
-          if (registerResult) {
-            const loginResult = await loginUser(username, password);
-            if (loginResult) {
-              props.setIsAuthLoading(false);
-              Navigate("/");
-            }
+          const registerResult = await register(username, password);
+          if (registerResult.success) {
+            const redirectLocation = "/";
+            await login(username, password, redirectLocation);
           }
         }}
       >

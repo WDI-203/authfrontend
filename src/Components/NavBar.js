@@ -1,13 +1,9 @@
 import { Outlet, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getUserToken, logoutUser } from "../Auth";
+import { useAuth } from "../Hooks/Auth";
 
 const NavBar = (props) => {
-  const [userToken, setUserToken] = useState(null);
-  useEffect(() => {
-    const userToken = getUserToken();
-    setUserToken(userToken || null);
-  }, [props.isAuthLoading]);
+  const { user, logout } = useAuth();
+
   return (
     <div>
       <nav>
@@ -16,7 +12,10 @@ const NavBar = (props) => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {!userToken && (
+          <li>
+              <Link to="/admin">Admin</Link>
+            </li>
+          {!user && (
             <>
               <li>
                 <Link to="/login">Login</Link>
@@ -27,18 +26,14 @@ const NavBar = (props) => {
             </>
           )}
         </ul>
-        {userToken && (
+        {user && (
           <>
             <span>
               <strong>You Are Logged In</strong>
             </span>
             <button
-              onClick={async() => {
-                props.setIsAuthLoading(true)
-                const logoutSuccess = await logoutUser();
-                if (logoutSuccess) {
-                  props.setIsAuthLoading(false)
-                }
+              onClick={async () => {
+                await logout();
               }}
             >
               Logout
