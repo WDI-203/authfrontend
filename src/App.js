@@ -3,6 +3,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import RegistrationPage from "./Pages/RegistrationPage";
 import LoginPage from "./Pages/LoginPage";
+import AdminPage from "./Pages/AdminPage";
 import NavBar from "./Components/NavBar";
 
 import { useAuth } from "./Hooks/Auth";
@@ -39,7 +40,7 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="registration" element={<RegistrationPage />} />
             <Route path="admin" element={<AdminLayout />}>
-              <Route index element={<h1>Admin Page</h1>} />
+              <Route index element={<AdminPage />} />
             </Route>
           </Route>
         </Routes>

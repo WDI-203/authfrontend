@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }) => {
     Memoization is essentially caching. The variable value will only be recalculated if the 
     variables in the watched array change.
   */
+ 
   const value = useMemo(
     () => ({
       user,
